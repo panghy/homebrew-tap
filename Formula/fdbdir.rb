@@ -30,8 +30,12 @@ class Fdbdir < Formula
       end
     end
   end
-
   def install
+    # Ensure dyld can locate libfdb_c on macOS
+    if OS.mac?
+      system "install_name_tool", "-add_rpath", "/usr/local/lib", bin/"fdbdir"
+      system "install_name_tool", "-add_rpath", "/opt/homebrew/lib", bin/"fdbdir"
+    end
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
     bin.install "fdbdir" if OS.linux? && Hardware::CPU.intel?
