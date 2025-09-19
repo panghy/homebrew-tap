@@ -1,7 +1,7 @@
 class Fdbdir < Formula
   desc "FoundationDB Directory Explorer CLI (interactive REPL with tuple decoding)"
   homepage "https://github.com/panghy/fdbdir"
-  version "0.1.31"
+  depends_on :macos
   url "https://github.com/panghy/fdbdir/releases/download/v0.1.31/fdbdir-aarch64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.arm?
   sha256 "4c6984066721ad75f7cfd1c9b8f20ded900e1f44b1f11a288da3e90eb4404e50" if OS.mac? && Hardware::CPU.arm?
   url "https://github.com/panghy/fdbdir/releases/download/v0.1.31/fdbdir-x86_64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.intel?
