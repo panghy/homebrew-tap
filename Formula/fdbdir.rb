@@ -30,18 +30,19 @@ class Fdbdir < Formula
       end
     end
   end
-
   def install
+
+bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
+    bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
+
     # Ensure dyld can locate libfdb_c on macOS
     if OS.mac?
-      macho = MachO::MachOFile.new((bin/"fdbdir").to_s)
+      macho = MachO::MachOFile.new((bin/["fdbdir"]).to_s)
       macho.rpaths << "/usr/local/lib" unless macho.rpaths.include?("/usr/local/lib")
       macho.rpaths << "/opt/homebrew/lib" unless macho.rpaths.include?("/opt/homebrew/lib")
       macho.write!
     end
 
-    bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
-    bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
     bin.install "fdbdir" if OS.linux? && Hardware::CPU.intel?
 
     install_binary_aliases!
