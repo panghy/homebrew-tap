@@ -3,12 +3,12 @@ class Fdbdir < Formula
   homepage "https://github.com/panghy/fdbdir"
   license "MIT"
   depends_on :macos
-  url "https://github.com/panghy/fdbdir/releases/download/v0.1.31/fdbdir-aarch64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.arm?
-  sha256 "4c6984066721ad75f7cfd1c9b8f20ded900e1f44b1f11a288da3e90eb4404e50" if OS.mac? && Hardware::CPU.arm?
-  url "https://github.com/panghy/fdbdir/releases/download/v0.1.31/fdbdir-x86_64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.intel?
-  sha256 "c1a388ded4793d2128c2154c81ce3b8e17985db0b8b98ff851e53b0987d99981" if OS.mac? && Hardware::CPU.intel?
-  url "https://github.com/panghy/fdbdir/releases/download/v0.1.31/fdbdir-x86_64-unknown-linux-gnu.tar.xz" if OS.linux? && Hardware::CPU.intel?
-  sha256 "9f98e40fe7abb0ef2f0c0e1733a0f65703fea403056721ca8eba661c04cfb3a9" if OS.linux? && Hardware::CPU.intel?
+  url "https://github.com/panghy/fdbdir/releases/download/v0.1.32/fdbdir-aarch64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.arm?
+  sha256 "e22e03ae7783bd03564deb4dd463d77c3c560697528c62db4986051ff3953ab1" if OS.mac? && Hardware::CPU.arm?
+  url "https://github.com/panghy/fdbdir/releases/download/v0.1.32/fdbdir-x86_64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.intel?
+  sha256 "3438360c8076aa3470b19647ea249330863137e6e2777f32c155cf808753f530" if OS.mac? && Hardware::CPU.intel?
+  url "https://github.com/panghy/fdbdir/releases/download/v0.1.32/fdbdir-x86_64-unknown-linux-gnu.tar.xz" if OS.linux? && Hardware::CPU.intel?
+  sha256 "18db82f9a38456b4ed203a19f7879f7ac6d30574f0414ce8ac9d3549c187388b" if OS.linux? && Hardware::CPU.intel?
 
   BINARY_ALIASES = {
     "aarch64-apple-darwin"     => {},
@@ -32,6 +32,14 @@ class Fdbdir < Formula
   end
 
   def install
+    # Ensure dyld can locate libfdb_c on macOS
+    if OS.mac?
+      macho = MachO::MachOFile.new((bin/"fdbdir").to_s)
+      macho.rpaths << "/usr/local/lib" unless macho.rpaths.include?("/usr/local/lib")
+      macho.rpaths << "/opt/homebrew/lib" unless macho.rpaths.include?("/opt/homebrew/lib")
+      macho.write!
+    end
+
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
     bin.install "fdbdir" if OS.linux? && Hardware::CPU.intel?
