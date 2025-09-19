@@ -33,6 +33,14 @@ class Fdbdir < Formula
   def install
     # Ensure dyld can locate libfdb_c on macOS
     if OS.mac?
+      macho = MachO::MachOFile.new((bin/"fdbdir").to_s)
+      macho.rpaths << "/usr/local/lib" unless macho.rpaths.include?("/usr/local/lib")
+      macho.rpaths << "/opt/homebrew/lib" unless macho.rpaths.include?("/opt/homebrew/lib")
+      macho.write!
+    end
+
+    # Ensure dyld can locate libfdb_c on macOS
+    if OS.mac?
       system "install_name_tool", "-add_rpath", "/usr/local/lib", bin/"fdbdir"
       system "install_name_tool", "-add_rpath", "/opt/homebrew/lib", bin/"fdbdir"
     end
