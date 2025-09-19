@@ -30,6 +30,7 @@ class Fdbdir < Formula
       end
     end
   end
+
   def install
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
