@@ -7,6 +7,8 @@ class Fdbdir < Formula
   sha256 "e22e03ae7783bd03564deb4dd463d77c3c560697528c62db4986051ff3953ab1" if OS.mac? && Hardware::CPU.arm?
   url "https://github.com/panghy/fdbdir/releases/download/v0.1.32/fdbdir-x86_64-apple-darwin.tar.xz" if OS.mac? && Hardware::CPU.intel?
   sha256 "3438360c8076aa3470b19647ea249330863137e6e2777f32c155cf808753f530" if OS.mac? && Hardware::CPU.intel?
+  url "https://github.com/panghy/fdbdir/releases/download/v0.1.32/fdbdir-x86_64-unknown-linux-gnu.tar.xz" if OS.linux? && Hardware::CPU.intel?
+  sha256 "18db82f9a38456b4ed203a19f7879f7ac6d30574f0414ce8ac9d3549c187388b" if OS.linux? && Hardware::CPU.intel?
 
   BINARY_ALIASES = {
     "aarch64-apple-darwin"     => {},
@@ -40,6 +42,7 @@ class Fdbdir < Formula
 
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
+    bin.install "fdbdir" if OS.linux? && Hardware::CPU.intel?
 
     install_binary_aliases!
 
