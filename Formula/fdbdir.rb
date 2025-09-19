@@ -11,10 +11,10 @@ class Fdbdir < Formula
   license "MIT"
 
   BINARY_ALIASES = {
-  "aarch64-apple-darwin"     => {},
-  "x86_64-apple-darwin"      => {},
-  "x86_64-unknown-linux-gnu" => {},
-}.freeze
+    "aarch64-apple-darwin"     => {},
+    "x86_64-apple-darwin"      => {},
+    "x86_64-unknown-linux-gnu" => {},
+  }.freeze
 
   def target_triple
     cpu = Hardware::CPU.arm? ? "aarch64" : "x86_64"
