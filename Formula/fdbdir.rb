@@ -33,7 +33,7 @@ class Fdbdir < Formula
 
   def install
 
-bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
+    bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
 
     # Ensure dyld can locate libfdb_c on macOS
