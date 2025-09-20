@@ -51,6 +51,12 @@ class Fdbdir < Formula
       bin.install "fdbdir"
     end
 
+
+
+    if OS.mac?
+      MachO::Tools.add_rpath((bin/"fdbdir").to_s, "/usr/local/lib")
+      MachO::Tools.add_rpath((bin/"fdbdir").to_s, "/opt/homebrew/lib")
+    end
     install_binary_aliases!
 
     # Homebrew will automatically install these, so we don't need to do that
