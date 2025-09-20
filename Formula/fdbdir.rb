@@ -34,11 +34,11 @@ class Fdbdir < Formula
   def install
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.arm?
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
+
     if OS.mac?
       MachO::Tools.add_rpath((bin/"fdbdir").to_s, "/usr/local/lib")
       MachO::Tools.add_rpath((bin/"fdbdir").to_s, "/opt/homebrew/lib")
     end
-
 
     bin.install "fdbdir" if OS.linux? && Hardware::CPU.intel?
 
