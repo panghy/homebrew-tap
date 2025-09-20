@@ -36,10 +36,8 @@ class Fdbdir < Formula
     bin.install "fdbdir" if OS.mac? && Hardware::CPU.intel?
 
     if OS.mac?
-      macho = MachO::MachOFile.new((bin/"fdbdir").to_s)
-      macho.rpaths << "/usr/local/lib" unless macho.rpaths.include?("/usr/local/lib")
-      macho.rpaths << "/opt/homebrew/lib" unless macho.rpaths.include?("/opt/homebrew/lib")
-      macho.write!
+      MachO::Tools.add_rpath((bin/"fdbdir").to_s, "/usr/local/lib")
+      MachO::Tools.add_rpath((bin/"fdbdir").to_s, "/opt/homebrew/lib")
     end
 
     bin.install "fdbdir" if OS.linux? && Hardware::CPU.intel?
